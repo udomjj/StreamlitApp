@@ -5,7 +5,7 @@ from PIL import Image
 
 st.set_page_config(page_title='Midterm Results')
 st.header('Midterm Results 2022')
-st.subheader('Was the test helpful?')
+st.subheader('Student midterm scores')
 
 ### --- LOAD DATAFRAME
 excel_file = 'Midterm_Results.xlsx'
@@ -43,15 +43,15 @@ st.markdown(f'*Available Results: {number_of_result}*')
 
 # --- GROUP DATAFRAME AFTER SELECTION
 df_grouped = df[mask].groupby(by=['Range']).count()[['Score']]
-df_grouped = df_grouped.rename(columns={'Score': 'Votes'})
+df_grouped = df_grouped.rename(columns={'Score': 'Students'})
 df_grouped = df_grouped.reset_index()
 
 # --- PLOT BAR CHART
 bar_chart = px.bar(df_grouped,
                    x='Range',
-                   y='Votes',
-                   text='Votes',
-                   color_discrete_sequence = ['#F63366']*len(df_grouped),
+                   y='Students',
+                   text='Students',
+                   color_discrete_sequence = ['#163386']*len(df_grouped),
                    template= 'plotly_white')
 st.plotly_chart(bar_chart)
 
@@ -59,7 +59,7 @@ st.plotly_chart(bar_chart)
 pie_chart = px.pie(df_students,
                 title='Total No. of Students',
                 values='Students',
-                names='Students')
+                names='Range.1') # Python changes 'Range' to 'Range.1'
 
 # st.plotly_chart(pie_chart)
 
@@ -72,3 +72,4 @@ col1, col2 = st.columns(2)
 col2.plotly_chart(pie_chart)
         
 col1.dataframe(df[mask])
+# col1.dataframe(df_students)
